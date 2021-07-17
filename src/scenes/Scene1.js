@@ -7,13 +7,12 @@ class Scene1 extends Phaser.Scene {
  
         // load image
         this.load.image('background', './assets/background.png');
-        this.load.image('road', './assets/road.png');
+        this.load.image('road', './assets/ground.png');
         this.load.image('character', './assets/character.png');
-        this.load.image('block', './assets/block.png');
-        this.load.image('vblock1', './assets/verticalblock2.png');
-        this.load.image('vblock2', './assets/verticalblock3.png');
+        this.load.image('block', './assets/enemy.png');
+        
         this.load.audio('jump', './assets/jump.wav');
-        this.load.audio('dead', './assets/dead.wav');
+        this.load.audio('dead', './assets/monsterdead.mp3');
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     }
@@ -64,20 +63,7 @@ class Scene1 extends Phaser.Scene {
             this.block.body.immovable = true;
             this.physics.add.collider(this.character, this.block);
         }
-        else if (2 == this.random){
-            this.block2 = this.physics.add.sprite(1500, 620, 'vblock1').setScale(0.5);
-            this.block2.body.setVelocityX(- this.level);
-            this.block2.body.allowGravity = false
-            this.block2.body.immovable = true;
-            this.physics.add.collider(this.character, this.block2);
-        }
-        else if (3 == this.random){
-            this.block3 = this.physics.add.sprite(1500, 585, 'vblock2').setScale(0.5);
-            this.block3.body.setVelocityX(- this.level);
-            this.block3.body.allowGravity = false
-            this.block3.body.immovable = true;
-            this.physics.add.collider(this.character, this.block3);
-        }
+        
         // check keyboard input
         if(cursors.left.isDown) {
             this.character.body.setAccelerationX(-this.ACCELERATION);
