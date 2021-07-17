@@ -11,7 +11,7 @@ class Scene1 extends Phaser.Scene {
         this.load.image('character', './assets/character.png');
         this.load.image('block', './assets/enemy.png');
         
-        this.load.audio('jumpp', './assets/jump.mp3');
+        this.load.audio('jump2', './assets/jump.mp3');
         this.load.audio('dead', './assets/monsterdead.mp3');
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -95,7 +95,7 @@ class Scene1 extends Phaser.Scene {
 	    if(this.jumping && Phaser.Input.Keyboard.UpDuration(cursors.up)) {
 	    	this.jumps--;
 	    	this.jumping = false;
-            this.sound.play('jumpp'); 
+            this.sound.play('jump2'); 
 	    }
 
         if (this.character.body.touching.right || this.character.body.touching.left)
