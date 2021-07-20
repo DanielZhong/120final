@@ -11,7 +11,7 @@ class Scene1 extends Phaser.Scene {
         this.load.image('character', './assets/character.png');
         this.load.image('block', './assets/enemy.png');
         
-        this.load.audio('jump', './assets/jump.wav');
+        this.load.audio('jump2', './assets/jump.mp3');
         this.load.audio('dead', './assets/monsterdead.mp3');
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -68,11 +68,11 @@ class Scene1 extends Phaser.Scene {
         if(cursors.left.isDown) {
             this.character.body.setAccelerationX(-this.ACCELERATION);
             this.character.setFlip(true, false);
-            //this.character.anims.play('walk', true);
+            
         } else if(cursors.right.isDown) {
             this.character.body.setAccelerationX(this.ACCELERATION);
             this.character.resetFlip();
-            //this.alien.anims.play('walk', true);
+            
         } else {
             // set acceleration to 0 so DRAG will take over
             this.character.body.setAccelerationX(0);
@@ -95,7 +95,7 @@ class Scene1 extends Phaser.Scene {
 	    if(this.jumping && Phaser.Input.Keyboard.UpDuration(cursors.up)) {
 	    	this.jumps--;
 	    	this.jumping = false;
-            this.sound.play('jump'); 
+            this.sound.play('jump2'); 
 	    }
 
         if (this.character.body.touching.right || this.character.body.touching.left)
