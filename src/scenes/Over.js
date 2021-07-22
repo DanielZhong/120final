@@ -14,6 +14,7 @@ class over extends Phaser.Scene {
         // place menu
         this.over = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'over').setOrigin(0, 0);
         
+        
 
     }
 

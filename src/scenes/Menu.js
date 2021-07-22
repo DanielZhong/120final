@@ -21,12 +21,18 @@ class menu extends Phaser.Scene {
         this.start = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'start').setOrigin(0, 0);
         
         
+            
+
+        
+
     }
     
 
     update() {
+        
         if (Phaser.Input.Keyboard.JustDown(keySPACE) || game.input.mousePointer.isDown) {
-            this.scene.start('Scene1');
+
+            this.scene.start('menu3');
         }
         
         
