@@ -8,6 +8,7 @@ class Scene1 extends Phaser.Scene {
         // load image
         this.load.image('background', './assets/background.png');
         this.load.image('road', './assets/ground.png');
+        this.load.image('road2', './assets/ground2.png');
         this.load.image('character', './assets/character.png');
         this.load.image('block', './assets/enemy.png');
         
@@ -30,12 +31,20 @@ class Scene1 extends Phaser.Scene {
         this.ground = this.physics.add.sprite(0, game.config.height - 30, 'road').setOrigin(0,0);
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
+        this.ground2 = this.physics.add.sprite(200, 400, 'road2').setOrigin(0,0);
+        this.ground2.body.immovable = true;
+        this.ground2.body.allowGravity = false;
+        this.ground3 = this.physics.add.sprite(700, 250, 'road2').setOrigin(0,0);
+        this.ground3.body.immovable = true;
+        this.ground3.body.allowGravity = false;
         this.character = this.physics.add.sprite(120, 600, 'character').setScale(0.3).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
         this.character.setMaxVelocity(this.MAX_X_VEL, this.MAX_Y_VEL);
         this.character.setCollideWorldBounds(true);
         cursors = this.input.keyboard.createCursorKeys();
 
         this.physics.add.collider(this.character, this.ground);
+        this.physics.add.collider(this.character, this.ground2);
+        this.physics.add.collider(this.character, this.ground3);
 
         //score
         this.score = 0;
