@@ -11,9 +11,10 @@ class Scene1 extends Phaser.Scene {
         this.load.image('road2', './assets/ground2.png');
         this.load.image('character', './assets/character.png');
         this.load.image('block', './assets/enemy.png');
+        this.load.image('star', './assets/star.png');
         
         this.load.audio('jump2', './assets/jump.mp3');
-        this.load.audio('dead', './assets/monsterdead.mp3');
+        this.load.audio('dead', './assets/dead.wav');
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     }
@@ -88,7 +89,7 @@ class Scene1 extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.start('Scene1');
         }
-        this.random = Phaser.Math.RND.integerInRange(1, 650);
+        this.random = Phaser.Math.RND.integerInRange(1, 680);
         if(1 == this.random){
             this.block = this.physics.add.sprite(550, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
             this.block.body.setVelocityX(- 150);
@@ -147,6 +148,22 @@ class Scene1 extends Phaser.Scene {
             this.block.body.immovable = true;
             this.physics.add.collider(this.character, this.block);
         }
+        if(9 == this.random){
+            this.star = this.physics.add.sprite(640, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+            this.star.tilePositionY -= 150;
+        }
+        if(10 == this.random){
+            this.star = this.physics.add.sprite(100, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+            this.star.tilePositionY -= 150;
+        }
+        if(11 == this.random){
+            this.star = this.physics.add.sprite(550, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+            this.star.tilePositionY -= 150;
+        }
+        if(12 == this.random){
+            this.star = this.physics.add.sprite(1200, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+            this.star.tilePositionY -= 150;
+        }
         
         // check keyboard input
         if(cursors.left.isDown) {
@@ -182,12 +199,13 @@ class Scene1 extends Phaser.Scene {
             this.sound.play('jump2'); 
 	    }
 
-        if (this.character.body.touching.right || this.character.body.touching.left || this.block.body.touching.up)
+        if (this.character.body.touching.right || this.character.body.touching.left)
         {
         // player is dead
         this.sound.play('dead'); 
         this.scene.start('over');
         }
+        
     }
 
     shoot(pointer) {
