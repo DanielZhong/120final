@@ -21,9 +21,6 @@ class menu extends Phaser.Scene {
         this.start = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'start').setOrigin(0, 0);
         
         
-    
-        
-
     }
     
 
