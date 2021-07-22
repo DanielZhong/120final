@@ -98,11 +98,11 @@ class Scene1 extends Phaser.Scene {
             this.sound.play('jump2'); 
 	    }
 
-        if (this.character.body.touching.right || this.character.body.touching.left)
-        {
-        // player is dead
+        if (this.character.body.touching.right || this.character.body.touching.left)
+        {
+        // player is dead
         this.sound.play('dead'); 
-        this.scene.start('over');
-        }
+        this.scene.start('over');
+        }
     }
 }
