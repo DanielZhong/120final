@@ -12,9 +12,10 @@ class Scene1 extends Phaser.Scene {
         this.load.image('character', './assets/character.png');
         this.load.image('block', './assets/enemy.png');
         this.load.image('star', './assets/star.png');
-        
         this.load.audio('jump2', './assets/jump.mp3');
         this.load.audio('dead', './assets/dead.wav');
+        this.load.spritesheet('run', './assets/moveright.png', {frameWidth: 150, frameHeight: 187});
+        this.load.spritesheet('jump', './assets/jumpright.png', {frameWidth: 150, frameHeight: 187});
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     }
@@ -39,8 +40,21 @@ class Scene1 extends Phaser.Scene {
         this.ground3.body.immovable = true;
         this.ground3.body.allowGravity = false;
         this.character = this.physics.add.sprite(120, 600, 'character').setScale(0.3).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+        //this.run = this.physics.add.sprite(120, 600, 'run').setScale(0.3);
+        //this.jump = this.physics.add.sprite(120, 600, 'jump').setScale(0.3);
         this.character.setMaxVelocity(this.MAX_X_VEL, this.MAX_Y_VEL);
         this.character.setCollideWorldBounds(true);
+
+        this.anims.create({
+            key: 'move',
+            frames: this.anims.generateFrameNames('run', {start: 1, end: 4})
+        });
+
+        this.anims.create({
+            key: 'up',
+            frames: this.anims.generateFrameNames('jump', {start: 1, end: 2})
+        });
+
         cursors = this.input.keyboard.createCursorKeys();
 
         this.physics.add.collider(this.character, this.ground);
@@ -60,8 +74,6 @@ class Scene1 extends Phaser.Scene {
 
     update() {
         
-        this.gamespeed += 0.003;
-        this.score += 1;
         this.scoreText.setText('Score: ' + this.score);
         
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
@@ -128,29 +140,35 @@ class Scene1 extends Phaser.Scene {
         }
         if(9 == this.random){
             this.star = this.physics.add.sprite(640, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
-            this.star.tilePositionY -= 150;
+            this.star.tilePositionY -= -5;
+            this.physics.add.overlap(this.character, this.star, this.collectStar, null, this);
         }
         if(10 == this.random){
             this.star = this.physics.add.sprite(100, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
-            this.star.tilePositionY -= 150;
+            this.star.tilePositionY -= -5;
+            this.physics.add.overlap(this.character, this.star, this.collectStar, null, this);
         }
         if(11 == this.random){
             this.star = this.physics.add.sprite(550, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
-            this.star.tilePositionY -= 150;
+            this.star.tilePositionY -= -5;
+            this.physics.add.overlap(this.character, this.star, this.collectStar, null, this);
         }
         if(12 == this.random){
             this.star = this.physics.add.sprite(1200, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
-            this.star.tilePositionY -= 150;
+            this.star.tilePositionY -= -5;
+            this.physics.add.overlap(this.character, this.star, this.collectStar, null, this);
         }
         
         // check keyboard input
         if(cursors.left.isDown) {
             this.character.body.setAccelerationX(-this.ACCELERATION);
             this.character.setFlip(true, false);
+            this.character.anims.play('move', true);
             
         } else if(cursors.right.isDown) {
             this.character.body.setAccelerationX(this.ACCELERATION);
             this.character.resetFlip();
+            this.character.anims.play('move', true);
             
         } else {
             // set acceleration to 0 so DRAG will take over
@@ -160,6 +178,11 @@ class Scene1 extends Phaser.Scene {
         }
         // check if alien is grounded
 	    this.character.isGrounded = this.character.body.touching.down;
+
+        // jump
+        if(!this.character.body.touching.down) {
+            this.character.anims.play('up', true);
+        }
 	    // if so, we have jumps to spare
 	    if(this.character.isGrounded) {
 	    	this.jumps = this.MAX_JUMPS;
@@ -182,6 +205,15 @@ class Scene1 extends Phaser.Scene {
 	{
 		this.sound.play('dead'); 
         this.scene.start('over');
+    }
+
+    collectStar (character,stars)
+    {
+        stars.disableBody(true, true);
+    
+        this.score += 10;
+        this.scoreText.setText('Score: ' + this.score);
+    
     }
 
 }
