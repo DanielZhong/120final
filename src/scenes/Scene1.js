@@ -41,6 +41,33 @@ class Scene1 extends Phaser.Scene {
         //score
         this.score = 0;
         this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
+        this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
+    	// make the camera follow the player
+    	this.cameras.main.startFollow(this.character);
+    	this.cameras.main.setZoom(1.5);
+   	 	// set background color, so the sky is not black    
+
+        this.input.on('pointerdown', function(){
+			var bullet_speed = 200;
+			var bullet_position_correction = 40;
+	        var bullet = this.bullets.get(player.x + (look_direction * bullet_position_correction), player.y);
+	        //var bullet = this.bullets.get(pointer.x, pointer.y);
+	        if (bullet) {
+	            bullet.setActive(true);
+	            bullet.setVisible(true);
+	            bullet.setScale(0.1);
+	            bullet.body.velocity.x = look_direction * bullet_speed;
+	            
+	            // use both x and y for angular shooting
+	            //bullet.body.velocity.y = look_direction * bullet_speed;
+	            
+	            bullet.body.setAllowGravity﻿(false);
+
+
+				//this.physics.add.overlap(bullet, enemy, this.collideEnemy, null, this);
+	        }
+	    }, this);
     } 
   
 
@@ -105,4 +132,34 @@ class Scene1 extends Phaser.Scene {
         this.scene.start('over');
         }
     }
+
+    shoot(pointer) {
+
+
+		var bullet_speed = 200;
+		var bullet_position_correction = 40;
+
+        var bullet = this.bullets.get(player.x + (look_direction * bullet_position_correction), player.y);
+        //var bullet = this.bullets.get(pointer.x, pointer.y);
+        if (bullet) {
+            bullet.setActive(true);
+            bullet.setVisible(true);
+            bullet.setScale(0.1);
+            bullet.body.velocity.x = look_direction * bullet_speed;
+            
+            // use both x and y for angular shooting
+            //bullet.body.velocity.y = look_direction * bullet_speed;
+            
+            bullet.body.setAllowGravity﻿(false);
+        }
+    }
+
+    collideBomb (bullet, bomb)
+	{
+
+		//enemy.destroy();
+		bullet.destroy();
+
+	}
+
 }
