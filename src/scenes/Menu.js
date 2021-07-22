@@ -13,6 +13,7 @@ class menu extends Phaser.Scene {
 
     create() {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.input.setDefaultCursor('url(./assets/cursor.png), pointer');
         this.sound.play('background'); //background music
 
         // place menu
