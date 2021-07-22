@@ -9,11 +9,12 @@ class menu extends Phaser.Scene {
         
         // load image
         this.load.image('start', './assets/start.png');
+        
     }
 
     create() {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.input.setDefaultCursor('url(./assets/cursor.png), pointer');
+        this.input.setDefaultCursor('url(./assets/cursor.cur), pointer');
         this.sound.play('background'); //background music
 
         // place menu
