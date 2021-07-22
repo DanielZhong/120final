@@ -1,18 +1,18 @@
-class over extends Phaser.Scene {
+class victory extends Phaser.Scene {
     constructor() {
-        super("over");
+        super("victory");
     }
 
     preload() {
         // load image
-        this.load.image('over', './assets/over.png');
+        this.load.image('victory', './assets/victory.png');
     }
 
     create() {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         // place menu
-        this.over = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'over').setOrigin(0, 0);
+        this.victory = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'victory').setOrigin(0, 0);
     }
 
     update() {
