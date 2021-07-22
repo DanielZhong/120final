@@ -88,10 +88,61 @@ class Scene1 extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.start('Scene1');
         }
-        this.random = Phaser.Math.RND.integerInRange(1, 450);
+        this.random = Phaser.Math.RND.integerInRange(1, 650);
         if(1 == this.random){
-            this.block = this.physics.add.sprite(1500, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
-            this.block.body.setVelocityX(- this.level);
+            this.block = this.physics.add.sprite(550, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 150);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block);
+        }
+        if(2 == this.random){
+            this.block = this.physics.add.sprite(250, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(150);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block);
+        }
+        if(3 == this.random){
+            this.block = this.physics.add.sprite(100, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(200);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block);
+        }
+
+        if(4 == this.random){
+            this.block = this.physics.add.sprite(750, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 200);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block);
+        }
+
+        if(5 == this.random){
+            this.block = this.physics.add.sprite(400, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 50);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block);
+        }
+        if(6 == this.random){
+            this.block = this.physics.add.sprite(850, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 150);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block);
+        }
+        if(7 == this.random){
+            this.block = this.physics.add.sprite(950, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 200);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block);
+        }
+        if(8 == this.random){
+            this.block = this.physics.add.sprite(1010, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 200);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
             this.physics.add.collider(this.character, this.block);
@@ -131,7 +182,7 @@ class Scene1 extends Phaser.Scene {
             this.sound.play('jump2'); 
 	    }
 
-        if (this.character.body.touching.right || this.character.body.touching.left)
+        if (this.character.body.touching.right || this.character.body.touching.left || this.block.body.touching.up)
         {
         // player is dead
         this.sound.play('dead'); 
