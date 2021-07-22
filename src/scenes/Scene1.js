@@ -14,7 +14,7 @@ class Scene1 extends Phaser.Scene {
         this.load.image('star', './assets/star.png');
         this.load.audio('jump2', './assets/jump.mp3');
         this.load.audio('dead', './assets/dead.wav');
-        this.load.audio('dead', './assets/star.wav');
+        this.load.audio('star', './assets/star.mp3');
         this.load.spritesheet('run', './assets/moveright.png', {frameWidth: 150, frameHeight: 187});
         this.load.spritesheet('jump', './assets/jumpright.png', {frameWidth: 150, frameHeight: 187});
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -33,7 +33,7 @@ class Scene1 extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'background').setOrigin(0, 0);
         this.ground = this.physics.add.sprite(0, game.config.height - 30, 'road').setOrigin(0,0);
         this.ground.body.immovable = true;
-        this.ground.body.allowGravity = false;
+        this.ground.body.allowGravity = false; 
         this.ground2 = this.physics.add.sprite(200, 400, 'road2').setOrigin(0,0);
         this.ground2.body.immovable = true;
         this.ground2.body.allowGravity = false;
@@ -41,6 +41,7 @@ class Scene1 extends Phaser.Scene {
         this.ground3.body.immovable = true;
         this.ground3.body.allowGravity = false;
         this.character = this.physics.add.sprite(120, 600, 'character').setScale(0.3).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+        this.block;
         //this.run = this.physics.add.sprite(120, 600, 'run').setScale(0.3);
         //this.jump = this.physics.add.sprite(120, 600, 'jump').setScale(0.3);
         this.character.setMaxVelocity(this.MAX_X_VEL, this.MAX_Y_VEL);
@@ -48,12 +49,12 @@ class Scene1 extends Phaser.Scene {
 
         this.anims.create({
             key: 'move',
-            frames: this.anims.generateFrameNames('run', {start: 1, end: 4})
+            frames: this.anims.generateFrameNames('run', {start: 0, end: 3})
         });
 
         this.anims.create({
             key: 'up',
-            frames: this.anims.generateFrameNames('jump', {start: 1, end: 2})
+            frames: this.anims.generateFrameNames('jump', {start: 0, end: 1})
         });
 
         cursors = this.input.keyboard.createCursorKeys();
@@ -64,18 +65,32 @@ class Scene1 extends Phaser.Scene {
 
         //score
         this.score = 0;
-        this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+        this.scoreText = this.add.text(0, 0, 'score: 0', { fontSize: '28px', fill: '#FF0000' });
 
         this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
     	// make the camera follow the player
     	this.cameras.main.startFollow(this.character);
     	this.cameras.main.setZoom(1.5);   
+
+        this.input.mouse.disableContextMenu();
+
+        this.input.on('gameobjectdown', function (pointer, gameObject) {
+
+            gameObject.destroy();
+    
+        });
     } 
   
 
     update() {
         
-        this.scoreText.setText('Score: ' + this.score);
+        this.scoreText.setText('Stars: ' + this.score);
+        this.scoreText.x = this.character.body.position.x - 25
+        this.scoreText.y = this.character.body.position.y - 35
+
+        if(this.score == 5){
+            this.scene.start('win');
+        }
         
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.start('Scene1');
@@ -141,22 +156,25 @@ class Scene1 extends Phaser.Scene {
         }
         if(9 == this.random){
             this.star = this.physics.add.sprite(640, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
-            this.star.tilePositionY -= -5;
+            this.star.body.setVelocityX(- 200);
+            this.star.tilePositionY -= 150;
             this.physics.add.overlap(this.character, this.star, this.collectStar, null, this);
         }
         if(10 == this.random){
             this.star = this.physics.add.sprite(100, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
-            this.star.tilePositionY -= -5;
+            this.star.body.setVelocityX(- 200);
+            this.star.tilePositionY -= 150;
             this.physics.add.overlap(this.character, this.star, this.collectStar, null, this);
         }
         if(11 == this.random){
             this.star = this.physics.add.sprite(550, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
-            this.star.tilePositionY -= -5;
+            this.star.body.setVelocityX(- 200);
+            this.star.tilePositionY -= 150;
             this.physics.add.overlap(this.character, this.star, this.collectStar, null, this);
         }
         if(12 == this.random){
             this.star = this.physics.add.sprite(1200, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
-            this.star.tilePositionY -= -5;
+            this.star.tilePositionY -= 150;
             this.physics.add.overlap(this.character, this.star, this.collectStar, null, this);
         }
         
@@ -211,12 +229,18 @@ class Scene1 extends Phaser.Scene {
     collectStar (character,stars)
     {
         stars.disableBody(true, true);
-        this.sound.play('star'); 
-        
-        this.score += 10;
+    
+        this.score += 1;
         this.scoreText.setText('Score: ' + this.score);
+
+        this.sound.play('star');
     
     }
-    
+
+    /*blockDie (block)
+    {
+        block.setActive(false);
+        block.setVisible(false);
+    }*/
 
 }
