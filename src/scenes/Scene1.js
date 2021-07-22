@@ -54,29 +54,7 @@ class Scene1 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
     	// make the camera follow the player
     	this.cameras.main.startFollow(this.character);
-    	this.cameras.main.setZoom(1.5);
-   	 	// set background color, so the sky is not black    
-
-        this.input.on('pointerdown', function(){
-			var bullet_speed = 200;
-			var bullet_position_correction = 40;
-	        var bullet = this.bullets.get(player.x + (look_direction * bullet_position_correction), player.y);
-	        //var bullet = this.bullets.get(pointer.x, pointer.y);
-	        if (bullet) {
-	            bullet.setActive(true);
-	            bullet.setVisible(true);
-	            bullet.setScale(0.1);
-	            bullet.body.velocity.x = look_direction * bullet_speed;
-	            
-	            // use both x and y for angular shooting
-	            //bullet.body.velocity.y = look_direction * bullet_speed;
-	            
-	            bullet.body.setAllowGravity﻿(false);
-
-
-				//this.physics.add.overlap(bullet, enemy, this.collideEnemy, null, this);
-	        }
-	    }, this);
+    	this.cameras.main.setZoom(1.5);   
     } 
   
 
@@ -95,21 +73,21 @@ class Scene1 extends Phaser.Scene {
             this.block.body.setVelocityX(- 150);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
-            this.physics.add.collider(this.character, this.block);
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
         }
         if(2 == this.random){
             this.block = this.physics.add.sprite(250, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
             this.block.body.setVelocityX(150);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
-            this.physics.add.collider(this.character, this.block);
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
         }
         if(3 == this.random){
             this.block = this.physics.add.sprite(100, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
             this.block.body.setVelocityX(200);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
-            this.physics.add.collider(this.character, this.block);
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
         }
 
         if(4 == this.random){
@@ -117,7 +95,7 @@ class Scene1 extends Phaser.Scene {
             this.block.body.setVelocityX(- 200);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
-            this.physics.add.collider(this.character, this.block);
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
         }
 
         if(5 == this.random){
@@ -125,28 +103,28 @@ class Scene1 extends Phaser.Scene {
             this.block.body.setVelocityX(- 50);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
-            this.physics.add.collider(this.character, this.block);
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
         }
         if(6 == this.random){
             this.block = this.physics.add.sprite(850, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
             this.block.body.setVelocityX(- 150);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
-            this.physics.add.collider(this.character, this.block);
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
         }
         if(7 == this.random){
             this.block = this.physics.add.sprite(950, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
             this.block.body.setVelocityX(- 200);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
-            this.physics.add.collider(this.character, this.block);
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
         }
         if(8 == this.random){
             this.block = this.physics.add.sprite(1010, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
             this.block.body.setVelocityX(- 200);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
-            this.physics.add.collider(this.character, this.block);
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
         }
         if(9 == this.random){
             this.star = this.physics.add.sprite(640, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
@@ -198,43 +176,12 @@ class Scene1 extends Phaser.Scene {
 	    	this.jumping = false;
             this.sound.play('jump2'); 
 	    }
-
-        if (this.character.body.touching.right || this.character.body.touching.left)
-        {
-        // player is dead
-        this.sound.play('dead'); 
-        this.scene.start('over');
-        }
     }
     
-
-    shoot(pointer) {
-
-
-		var bullet_speed = 200;
-		var bullet_position_correction = 40;
-
-        var bullet = this.bullets.get(player.x + (look_direction * bullet_position_correction), player.y);
-        //var bullet = this.bullets.get(pointer.x, pointer.y);
-        if (bullet) {
-            bullet.setActive(true);
-            bullet.setVisible(true);
-            bullet.setScale(0.1);
-            bullet.body.velocity.x = look_direction * bullet_speed;
-            
-            // use both x and y for angular shooting
-            //bullet.body.velocity.y = look_direction * bullet_speed;
-            
-            bullet.body.setAllowGravity﻿(false);
-        }
-    }
-
-    collideBomb (bullet, bomb)
+    hitBlock (character, block)
 	{
-
-		//enemy.destroy();
-		bullet.destroy();
-
-	}
+		this.sound.play('dead'); 
+        this.scene.start('over');
+    }
 
 }
