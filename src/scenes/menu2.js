@@ -15,10 +15,6 @@ class menu2 extends Phaser.Scene {
 
         // place menu
         this.start = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'start').setOrigin(0, 0);
-        
-
-        
-
     }
     
 
