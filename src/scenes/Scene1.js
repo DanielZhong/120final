@@ -14,6 +14,7 @@ class Scene1 extends Phaser.Scene {
         this.load.image('star', './assets/star.png');
         this.load.audio('jump2', './assets/jump.mp3');
         this.load.audio('dead', './assets/dead.wav');
+        this.load.audio('dead', './assets/star.wav');
         this.load.spritesheet('run', './assets/moveright.png', {frameWidth: 150, frameHeight: 187});
         this.load.spritesheet('jump', './assets/jumpright.png', {frameWidth: 150, frameHeight: 187});
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -210,10 +211,12 @@ class Scene1 extends Phaser.Scene {
     collectStar (character,stars)
     {
         stars.disableBody(true, true);
-    
+        this.sound.play('star'); 
+        
         this.score += 10;
         this.scoreText.setText('Score: ' + this.score);
     
     }
+    
 
 }
