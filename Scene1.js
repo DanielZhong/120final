@@ -11,19 +11,15 @@ class Scene1 extends Phaser.Scene {
         this.load.image('road2', './assets/ground2.png');
         this.load.image('character', './assets/character.png');
         this.load.image('block', './assets/enemy.png');
-        this.load.image('bullet', './assets/bullet.png');
+        this.load.image('star', './assets/star.png');
+        
         this.load.audio('jump2', './assets/jump.mp3');
-        this.load.audio('dead', './assets/monsterdead.mp3');
+        this.load.audio('dead', './assets/dead.wav');
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     }
 
-
     create() {
-        var sprite;
-        var bullets;
-        var fireRate = 100;
-        var nextFire = 0;
         this.level = 370;
         this.ACCELERATION = 1500;
         this.JUMP_VELOCITY = -900;
@@ -58,26 +54,7 @@ class Scene1 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
     	// make the camera follow the player
     	this.cameras.main.startFollow(this.character);
-    	this.cameras.main.setZoom(1.5);
-
-        //game.stage.backgroundColor = '#313131';
-    
-        bullets = this.add.group();
-        bullets.enableBody = true;
-        bullets.physicsBodyType = Phaser.Physics.ARCADE;
-    
-        bullets.createMultiple(50, 'bullet');
-        //bullets.setAll('checkWorldBounds', true);
-        //bullets.setAll('outOfBoundsKill', true);
-
-        //sprite.anchor.set(0.5);
-    
-        //game.physics.enable(sprite, Phaser.Physics.ARCADE);
-    
-        //sprite.body.allowRotation = false;
-        
-
-
+    	this.cameras.main.setZoom(1.5);   
     } 
   
 
@@ -90,13 +67,80 @@ class Scene1 extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyR)) {
             this.scene.start('Scene1');
         }
-        this.random = Phaser.Math.RND.integerInRange(1, 450);
+        this.random = Phaser.Math.RND.integerInRange(1, 680);
         if(1 == this.random){
-            this.block = this.physics.add.sprite(1500, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
-            this.block.body.setVelocityX(- this.level);
+            this.block = this.physics.add.sprite(550, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 150);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
-            this.physics.add.collider(this.character, this.block);
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
+        }
+        if(2 == this.random){
+            this.block = this.physics.add.sprite(250, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(150);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
+        }
+        if(3 == this.random){
+            this.block = this.physics.add.sprite(100, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(200);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
+        }
+
+        if(4 == this.random){
+            this.block = this.physics.add.sprite(750, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 200);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
+        }
+
+        if(5 == this.random){
+            this.block = this.physics.add.sprite(400, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 50);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
+        }
+        if(6 == this.random){
+            this.block = this.physics.add.sprite(850, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 150);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
+        }
+        if(7 == this.random){
+            this.block = this.physics.add.sprite(950, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 200);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
+        }
+        if(8 == this.random){
+            this.block = this.physics.add.sprite(1010, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
+            this.block.body.setVelocityX(- 200);
+            this.block.body.allowGravity = false
+            this.block.body.immovable = true;
+            this.physics.add.collider(this.character, this.block, this.hitBlock, null, this);
+        }
+        if(9 == this.random){
+            this.star = this.physics.add.sprite(640, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+            this.star.tilePositionY -= 150;
+        }
+        if(10 == this.random){
+            this.star = this.physics.add.sprite(100, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+            this.star.tilePositionY -= 150;
+        }
+        if(11 == this.random){
+            this.star = this.physics.add.sprite(550, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+            this.star.tilePositionY -= 150;
+        }
+        if(12 == this.random){
+            this.star = this.physics.add.sprite(1200, 10, 'star').setScale(0.5).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
+            this.star.tilePositionY -= 150;
         }
         
         // check keyboard input
@@ -132,40 +176,12 @@ class Scene1 extends Phaser.Scene {
 	    	this.jumping = false;
             this.sound.play('jump2'); 
 	    }
-
-        if (this.character.body.touching.right || this.character.body.touching.left)
-        {
-        // player is dead
-        this.sound.play('dead'); 
+    }
+    
+    hitBlock (character, block)
+	{
+		this.sound.play('dead'); 
         this.scene.start('over');
-        }
-
-        if (game.input.activePointer.isDown)
-        {
-        fire();
-        }
-    }
-
-    fire() {
-
-        if (game.time.now > nextFire && bullets.countDead() > 0)
-        {
-            nextFire = game.time.now + fireRate;
-    
-            var bullet = bullets.getFirstDead();
-    
-            bullet.reset(sprite.x - 8, sprite.y - 8);
-    
-            game.physics.arcade.moveToPointer(bullet, 300);
-        }
-    
-    }
-
-    render() {
-
-        game.debug.text('Active Bullets: ' + bullets.countLiving() + ' / ' + bullets.total, 32, 32);
-        game.debug.spriteInfo(sprite, 32, 450);
-    
     }
 
 }
