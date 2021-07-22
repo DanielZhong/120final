@@ -31,7 +31,7 @@ class Scene1 extends Phaser.Scene {
         this.ground = this.physics.add.sprite(0, game.config.height - 30, 'road').setOrigin(0,0);
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
-        this.character = this.physics.add.sprite(120, 600, 'character').setScale(0.3);
+        this.character = this.physics.add.sprite(120, 600, 'character').setScale(0.3).setInteractive({ cursor: 'url(./assets/stop.cur), pointer'});
         this.character.setMaxVelocity(this.MAX_X_VEL, this.MAX_Y_VEL);
         this.character.setCollideWorldBounds(true);
         cursors = this.input.keyboard.createCursorKeys();
@@ -57,7 +57,7 @@ class Scene1 extends Phaser.Scene {
         }
         this.random = Phaser.Math.RND.integerInRange(1, 450);
         if(1 == this.random){
-            this.block = this.physics.add.sprite(1500, 660, 'block').setScale(0.5);
+            this.block = this.physics.add.sprite(1500, 660, 'block').setScale(0.5).setInteractive({ cursor: 'url(./assets/cursor.cur), pointer'});
             this.block.body.setVelocityX(- this.level);
             this.block.body.allowGravity = false
             this.block.body.immovable = true;
