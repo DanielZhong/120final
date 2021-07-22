@@ -205,8 +205,8 @@ class Scene1 extends Phaser.Scene {
         this.sound.play('dead'); 
         this.scene.start('over');
         }
-        
     }
+    
 
     shoot(pointer) {
 
